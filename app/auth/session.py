@@ -1,12 +1,16 @@
 import streamlit as st
 
 
-def is_logged_in():
+def initialize():
 
-    return st.session_state.get(
-        "logged_in",
-        False
-    )
+    if "logged_in" not in st.session_state:
+        st.session_state.logged_in = False
+
+    if "show_register" not in st.session_state:
+        st.session_state.show_register = False
+
+    if "remember_user" not in st.session_state:
+        st.session_state.remember_user = ""
 
 
 def login():
@@ -19,8 +23,6 @@ def logout():
     st.session_state.logged_in = False
 
 
-def initialize():
+def is_logged_in():
 
-    if "logged_in" not in st.session_state:
-
-        st.session_state.logged_in = False
+    return st.session_state.logged_in

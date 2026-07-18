@@ -17,27 +17,33 @@ def login_page():
 
     remember = st.checkbox("Remember Me")
 
-    if st.button("Login"):
+    col1, col2 = st.columns(2)
 
-        user = login_user(
-            username,
-            password
-        )
+    with col1:
 
-        if user:
+        if st.button("Login"):
 
-            login()
+            user = login_user(
+                username,
+                password
+            )
 
-            # Save username only
-            st.session_state["username"] = username
+            if user:
 
-            if remember:
-                st.session_state["remember"] = True
+                login()
 
-            st.success("Login Successful")
+                st.success("Login Successful")
+
+                st.rerun()
+
+            else:
+
+                st.error("Invalid Username or Password")
+
+    with col2:
+
+        if st.button("Create Account"):
+
+            st.session_state.show_register = True
 
             st.rerun()
-
-        else:
-
-            st.error("Invalid Username or Password")
