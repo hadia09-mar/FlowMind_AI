@@ -178,9 +178,9 @@ Add screenshots here.
 
 AI Automation Engineer
 
-GitHub:
+GitHub:https://github.com/hadia09-mar/FlowMind_AI
 
-LinkedIn:
+LinkedIn:https://www.linkedin.com/in/hadia-maryam-7558bb414/
 
 ---
 
