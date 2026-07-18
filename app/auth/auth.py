@@ -1,7 +1,6 @@
 from app.services.database import db
 import hashlib
 
-
 # -------------------------
 # Users Table
 # -------------------------
@@ -20,7 +19,6 @@ def create_user_table():
     )
     """)
 
-
 # -------------------------
 # Documents Table
 # -------------------------
@@ -38,7 +36,6 @@ def create_documents_table():
 
     )
     """)
-
 
 # -------------------------
 # HR Reports Table
@@ -60,7 +57,6 @@ def create_hr_table():
     )
     """)
 
-
 # -------------------------
 # Research Reports Table
 # -------------------------
@@ -78,7 +74,6 @@ def create_research_table():
 
     )
     """)
-
 
 # -------------------------
 # Activity Logs
@@ -100,6 +95,38 @@ def create_activity_table():
     )
     """)
 
+# -------------------------
+# Automation Workflows
+# -------------------------
+
+def create_automation_table():
+
+    db.execute("""
+    CREATE TABLE IF NOT EXISTS automation_workflows(
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        trigger_name TEXT,
+
+        action_name TEXT,
+
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+    )
+    """)
+
+# -------------------------
+# Initialize Database
+# -------------------------
+
+def initialize_database():
+
+    create_user_table()
+    create_documents_table()
+    create_hr_table()
+    create_research_table()
+    create_activity_table()
+    create_automation_table()
 
 # -------------------------
 # Password Hash
@@ -110,7 +137,6 @@ def hash_password(password):
     return hashlib.sha256(
         password.encode()
     ).hexdigest()
-
 
 # -------------------------
 # Register User
@@ -123,17 +149,11 @@ def register_user(username, password):
     try:
 
         db.execute(
-
             "INSERT INTO users(username,password) VALUES(?,?)",
-
             (
-
                 username,
-
                 hash_password(password)
-
             )
-
         )
 
         return True
@@ -141,7 +161,6 @@ def register_user(username, password):
     except:
 
         return False
-
 
 # -------------------------
 # Login User
@@ -152,40 +171,11 @@ def login_user(username, password):
     username = username.strip().lower()
 
     db.execute(
-
         "SELECT * FROM users WHERE username=? AND password=?",
-
         (
-
             username,
-
             hash_password(password)
-
         )
-
     )
 
     return db.fetchone()
-
-
-# -------------------------
-# Automation Table
-# -------------------------
-
-def create_automation_table():
-
-    db.execute("""
-
-    CREATE TABLE IF NOT EXISTS automation_workflows(
-
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-        trigger_name TEXT,
-
-        action_name TEXT,
-
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
-    )
-
-    """)

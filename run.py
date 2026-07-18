@@ -1,12 +1,14 @@
 import streamlit as st
 
-from app.auth.auth import (
-    create_user_table,
-    create_documents_table,
-    create_hr_table,
-    create_research_table,
-    create_activity_table,
-)
+# -------------------------
+# Database
+# -------------------------
+
+from app.auth.auth import initialize_database
+
+# -------------------------
+# Authentication
+# -------------------------
 
 from app.auth.login import login_page
 from app.auth.register import register_page
@@ -15,6 +17,10 @@ from app.auth.session import (
     is_logged_in,
     logout,
 )
+
+# -------------------------
+# Pages
+# -------------------------
 
 from app.ui.dashboard import dashboard
 from app.ui.hr import hr_page
@@ -25,11 +31,11 @@ from app.ui.mail import mail_page
 from app.ui.automation import automation_page
 from app.ui.analytics import analytics_page
 from app.ui.settings import settings_page
+
 from app.chat.chatbot import ChatBot
 
-
 # -------------------------
-# Streamlit Config
+# Config
 # -------------------------
 
 st.set_page_config(
@@ -39,14 +45,10 @@ st.set_page_config(
 )
 
 # -------------------------
-# Database
+# Database Initialization
 # -------------------------
 
-create_user_table()
-create_documents_table()
-create_hr_table()
-create_research_table()
-create_activity_table()
+initialize_database()
 
 # -------------------------
 # Session
@@ -127,6 +129,10 @@ elif menu == "Analytics":
 
 elif menu == "Settings":
     settings_page()
+
+# -------------------------
+# AI Assistant
+# -------------------------
 
 st.sidebar.divider()
 
