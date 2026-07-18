@@ -21,7 +21,9 @@ def register_page():
 
     if st.button("Create Account"):
 
-        if username == "" or password == "":
+        username = username.strip()
+
+        if username == "" or password == "" or confirm_password == "":
 
             st.error("All fields are required")
 
@@ -46,9 +48,7 @@ def register_page():
 
             if success:
 
-                st.success("Account Created Successfully")
-
-                st.info("Please Login")
+                st.success("✅ Account Created Successfully")
 
                 st.session_state.show_register = False
 
@@ -57,6 +57,8 @@ def register_page():
             else:
 
                 st.error("Username already exists")
+
+    st.divider()
 
     if st.button("⬅ Back to Login"):
 

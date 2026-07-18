@@ -102,7 +102,7 @@ def create_activity_table():
 
 
 # -------------------------
-# Password Hashing
+# Password Hash
 # -------------------------
 
 def hash_password(password):
@@ -113,19 +113,27 @@ def hash_password(password):
 
 
 # -------------------------
-# Register
+# Register User
 # -------------------------
 
 def register_user(username, password):
 
+    username = username.strip().lower()
+
     try:
 
         db.execute(
+
             "INSERT INTO users(username,password) VALUES(?,?)",
+
             (
+
                 username,
+
                 hash_password(password)
+
             )
+
         )
 
         return True
@@ -136,36 +144,48 @@ def register_user(username, password):
 
 
 # -------------------------
-# Login
+# Login User
 # -------------------------
 
 def login_user(username, password):
 
+    username = username.strip().lower()
+
     db.execute(
+
         "SELECT * FROM users WHERE username=? AND password=?",
+
         (
+
             username,
+
             hash_password(password)
+
         )
+
     )
 
     return db.fetchone()
+
+
+# -------------------------
+# Automation Table
+# -------------------------
+
 def create_automation_table():
 
-    from app.services.database import db
+    db.execute("""
 
-    db.execute(
-        """
-        CREATE TABLE IF NOT EXISTS automation_workflows(
+    CREATE TABLE IF NOT EXISTS automation_workflows(
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-            trigger_name TEXT,
+        trigger_name TEXT,
 
-            action_name TEXT,
+        action_name TEXT,
 
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-        )
-        """
     )
+
+    """)

@@ -8,7 +8,13 @@ def login_page():
 
     st.title("🔐 Login")
 
-    username = st.text_input("Username")
+    username = st.text_input(
+        "Username",
+        value=st.session_state.get(
+            "remember_user",
+            ""
+        )
+    )
 
     password = st.text_input(
         "Password",
@@ -24,13 +30,17 @@ def login_page():
         if st.button("Login"):
 
             user = login_user(
-                username,
+                username.strip(),
                 password
             )
 
             if user:
 
                 login()
+
+                if remember:
+
+                    st.session_state.remember_user = username.strip()
 
                 st.success("Login Successful")
 
